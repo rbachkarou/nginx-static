@@ -1,0 +1,6 @@
+additional_packages:
+  - htop
+  - ncdu
+  - git
+  - nano
+  - unzip

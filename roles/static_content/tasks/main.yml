@@ -1,0 +1,25 @@
+- name: Create images directory
+  file:
+    path: /var/www/html/images
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Copy images archive from role to remote server
+  copy:
+    src: images_archive.zip
+    dest: /tmp/images.zip
+  tags:
+    - copy_static
+
+- name: Unarchive images
+  unarchive:
+    src: /tmp/images.zip
+    dest: /var/www/html/images/
+    remote_src: yes
+    owner: www-data
+    group: www-data
+    mode: '0644'
+  tags:
+  - copy_static

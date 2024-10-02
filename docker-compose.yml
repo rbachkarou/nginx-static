@@ -1,0 +1,11 @@
+# docker-compose.yml
+version: '3'
+services:
+  static_server:
+    build: .
+    container_name: static_server
+    ports:
+      - "80:80"
+      - "2222:22"
+    volumes:
+      - .:/ansible

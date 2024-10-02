@@ -1,0 +1,40 @@
+- name: Disable root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+  register: root_login_change  
+
+- name: Disable empty passwords
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+    state: present
+  register: empty_password_change  
+
+- name: Set LogLevel to VERBOSE
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^LogLevel'
+    line: 'LogLevel VERBOSE'
+    state: present
+  register: log_level_change  
+
+- name: Disable X11Forwarding
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^X11Forwarding'
+    line: 'X11Forwarding no'
+    state: present
+  register: x11_forwarding_change  
+
+- name: Restart SSH service if any changes were made
+  service:
+    name: ssh
+    state: restarted
+  when: root_login_change.changed or 
+        empty_password_change.changed or 
+        log_level_change.changed or 
+        x11_forwarding_change.changed 

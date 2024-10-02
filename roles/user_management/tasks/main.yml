@@ -1,0 +1,43 @@
+# Ensure custom groups are present
+- name: Ensure custom groups are present
+  group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ custom_groups }}"
+  tags: 
+    - create-user
+  
+# Ensure users are managed
+- name: Ensure user "{{ item.name }}" is in the system
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+    state: "{{ item.state }}"
+    groups: "{{ item.groups | join(',') }}"
+    password: "{{ item.password }}"
+  loop: "{{ users }}"
+  when: item.state == 'present'
+  tags: 
+    - create-user
+
+- name: Set authorized key for "{{ item.name }}"
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.ssh_key }}"
+  loop: "{{ users }}"
+  when:
+    - item.state == 'present'
+    - item.ssh_key is defined
+  tags: 
+    - create-user
+  
+# Remove users
+- name: Remove user "{{ item.name }}"
+  user:
+    name: "{{ item.name }}"
+    state: absent
+    remove: yes
+  loop: "{{ users }}"
+  when: item.state == 'absent'
+  tags: 
+    - remove-user

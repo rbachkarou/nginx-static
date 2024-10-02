@@ -1,0 +1,13 @@
+# roles/package_installation/tasks/main.yml
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  tags: 
+    - update-packges
+
+- name: Install additional packages
+  apt:
+    name: "{{ additional_packages }}"
+    state: present
+  tags: 
+    - update-packges

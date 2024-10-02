@@ -1,0 +1,31 @@
+custom_groups:
+  - developers
+  - testers
+
+users:
+  - name: alice
+    shell: /bin/bash
+    state: present
+    # Have a problem with passlib on mac so hash already there.
+    #password: "{{ '1234567' | password_hash('sha512') }}"
+    password: '$6$4ZV/wr3eyBX3EYGl$2RqtlX5qxNIv57RDl0RioC9ObVqbRdoFhiKXv8iCrkmk1D5ejwKYBLhXIRl1hOopRYIXKqEWALPsilBM72nxt0'
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC"
+    groups:
+      - sudo
+      - developers
+  - name: bob
+    shell: /bin/zsh
+    state: absent
+    #password: "{{ 'asd1231dasd' | password_hash('sha512') }}"
+    password: '$6$QDVD6gjSSD3qR4bw$mVuI1nIFgpyvwz7FXYIik7TgJeT99BUGSOx/OVxIN4IYH1/JZh6OhtAXdHfghWpoJ2u9VIJ9cm.2GyZyhBoV4/'
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD"
+    groups:
+      - testers
+  - name: bib
+    shell: /bin/zsh
+    state: present
+    #password: "{{ '123123123' | password_hash('sha512') }}"
+    password: '$6$n2rN5jztOI3SgOWM$J3O3g6dKCtc9gXL2NQ9OiQXxa/UU2nvRt3Ntyvna54T3tBL3LZ2u5kHw9HbhqtkSTB423ILZ069X0pvzLkdKW0'
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD"
+    groups:
+      - testers

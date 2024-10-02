@@ -1,0 +1,13 @@
+# playbook.yml
+- hosts: static_server
+  become: yes
+  vars_files:
+    - vars/packages.yml
+    - vars/users.yml
+  roles:
+    - user_management
+    - package_installation
+    - zsh_installation
+    - ssh_configuration
+    - nginx_setup
+    - static_content

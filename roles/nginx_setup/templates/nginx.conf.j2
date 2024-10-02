@@ -1,0 +1,21 @@
+# roles/nginx_setup/templates/nginx.conf.j2
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    gzip on;
+    gzip_types text/plain application/xml text/css application/javascript;
+    gzip_min_length 256;
+
+    location /images/ {
+        autoindex on;
+        expires 1h;
+        add_header Cache-Control "public";
+    }
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+}
