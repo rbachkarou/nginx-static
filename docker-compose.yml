@@ -1,6 +1,6 @@
 services:
   static_server:
-    build: Dockerfile
+    build: .
     container_name: static_server
     ports:
       - "80:80"
