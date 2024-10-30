@@ -1,4 +1,5 @@
-To update packages use tag --update-packges and file /vars/packages/
-To create users use tag --create-user and file /vars/users/
-To remove users use tag --remove-user and file /vars/users/
-To update static use tag copy_static
+To update packages use --tag update-packges and file /vars/packages/
+To create users use --tag create-user and file /vars/users/
+To remove users use --tag remove-user and file /vars/users/
+To update static use --tag copy_static
+To update nginx rules use --tag update-nginx-rule

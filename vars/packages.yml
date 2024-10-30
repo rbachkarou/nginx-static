@@ -4,3 +4,4 @@ additional_packages:
   - git
   - nano
   - unzip
+  - net-tools

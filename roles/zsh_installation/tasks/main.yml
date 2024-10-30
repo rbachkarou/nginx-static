@@ -6,41 +6,50 @@
   tags: 
     - create-user
 
-- name: Install Oh My Zsh for users with zsh shell
-  block:
-    - name: Ensure the .oh-my-zsh directory exists
-      file:
-        path: "/home/{{ item.name }}/.oh-my-zsh"
-        state: directory
-        owner: "{{ item.name }}"
-        group: "{{ item.name }}"
-        mode: '0755'
-      become_user: "{{ item.name }}"
-      loop: "{{ users }}"
-      when: "'/bin/zsh' in item.shell"
-      tags: 
-        - create-user
+- name: Ensure the .oh-my-zsh directory exists
+  file:
+    path: "/home/{{ item.name }}/.oh-my-zsh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0755'
+  become_user: "{{ item.name }}"
+  loop: "{{ users }}"
+  when: "'/bin/zsh' in item.shell and item.state == 'present'"
+  tags: 
+    - create-user
 
-    - name: Clone Oh My Zsh
-      git:
-        repo: https://github.com/ohmyzsh/ohmyzsh.git
-        dest: "/home/{{ item.name }}/.oh-my-zsh"
-      become_user: "{{ item.name }}"
-      loop: "{{ users }}"
-      when: "'/bin/zsh' in item.shell"
-      tags: 
-        - create-user
-  
-    - name: Copy .zshrc template
-      copy:
-        src: "/home/{{ item.name }}/.oh-my-zsh/templates/zshrc.zsh-template"
-        dest: "/home/{{ item.name }}/.zshrc"
-        owner: "{{ item.name }}"
-        group: "{{ item.name }}"
-        mode: '0644'
-        remote_src: yes
-      become_user: "{{ item.name }}"
-      loop: "{{ users }}"
-      when: "'/bin/zsh' in item.shell"
-      tags: 
-        - create-user
+- name: Set ownership for Oh My Zsh directory
+  file:
+    path: "/home/{{ item.name }}/.oh-my-zsh"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    recurse: yes
+  loop: "{{ users }}"
+  when: "'/bin/zsh' in item.shell and item.state == 'present'"
+  tags:
+    - create-user
+
+- name: Clone Oh My Zsh
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "/home/{{ item.name }}/.oh-my-zsh"
+  become_user: "{{ item.name }}"
+  loop: "{{ users }}"
+  when: "'/bin/zsh' in item.shell and item.state == 'present'"
+  tags: 
+    - create-user
+
+- name: Copy .zshrc template
+  copy:
+    src: "/home/{{ item.name }}/.oh-my-zsh/templates/zshrc.zsh-template"
+    dest: "/home/{{ item.name }}/.zshrc"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0644'
+    remote_src: yes
+  become_user: "{{ item.name }}"
+  loop: "{{ users }}"
+  when: "'/bin/zsh' in item.shell and item.state == 'present'"
+  tags: 
+    - create-user

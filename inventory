@@ -1,2 +1,2 @@
 [static_server]
-static_server ansible_host=127.0.0.1 ansible_port=2222 ansible_user=root ansible_password=123441231231 ansible_connection=ssh
+static_server ansible_port=2222 ansible_connection=docker ansible_user=root

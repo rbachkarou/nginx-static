@@ -6,13 +6,14 @@ users:
   - name: alice
     shell: /bin/bash
     state: present
-    # Have a problem with passlib on mac so hash already there.
+    # I have a problem with passlib on Mac, so the hash is already provided.
     #password: "{{ '1234567' | password_hash('sha512') }}"
     password: '$6$4ZV/wr3eyBX3EYGl$2RqtlX5qxNIv57RDl0RioC9ObVqbRdoFhiKXv8iCrkmk1D5ejwKYBLhXIRl1hOopRYIXKqEWALPsilBM72nxt0'
     ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC"
     groups:
       - sudo
       - developers
+
   - name: bob
     shell: /bin/zsh
     state: absent
@@ -21,6 +22,7 @@ users:
     ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD"
     groups:
       - testers
+
   - name: bib
     shell: /bin/zsh
     state: present

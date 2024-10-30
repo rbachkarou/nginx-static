@@ -31,9 +31,7 @@
   register: x11_forwarding_change  
 
 - name: Restart SSH service if any changes were made
-  service:
-    name: ssh
-    state: restarted
+  command: /etc/init.d/ssh restart
   when: root_login_change.changed or 
         empty_password_change.changed or 
         log_level_change.changed or 
