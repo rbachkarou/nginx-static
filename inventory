@@ -1,2 +1,2 @@
 [static_server]
-static_server ansible_port=2222 ansible_connection=docker ansible_user=root
+static_server ansible_connection=docker ansible_user=root
